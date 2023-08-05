@@ -29,6 +29,7 @@ class AlbumListFragmentViewModel @Inject constructor(
 
     // A cache to get fake pagination from
     private var albumsList: List<Album>? = null
+    private var albumsWithPhotosList = mutableListOf<AlbumWithPhotos>()
     private val pageSize = 10
 
     init {
@@ -58,6 +59,7 @@ class AlbumListFragmentViewModel @Inject constructor(
                 }
             }.awaitAll().filterNotNull()
 
+            albumsWithPhotosList.addAll(photosList)
 
 
             _albums.postValue(photosList)
@@ -65,13 +67,14 @@ class AlbumListFragmentViewModel @Inject constructor(
         }
     }
 
-    fun requestMore(offset: Int) {
+    fun requestMore() {
+        Timber.d("Requesting More")
         val albumsList = albumsList ?: return
 
         viewModelScope.launch {
-            if (albumsList.size < offset) {
+            if (albumsList.size > albumsWithPhotosList.size) {
 
-                val photosList = albumsList.subList(offset, offset + pageSize).map {
+                val photosList = albumsList.subList(0, albumsWithPhotosList.size + pageSize).map {
                     async {
                         val res = getAlbumPhotosUseCase.execute(it.id)
                         return@async if (res.isSuccess) {
@@ -85,7 +88,8 @@ class AlbumListFragmentViewModel @Inject constructor(
                     }
                 }.awaitAll().filterNotNull()
 
-                _albums.postValue(photosList)
+                albumsWithPhotosList.addAll(photosList)
+                _albums.postValue(albumsWithPhotosList)
             }
         }
     }
