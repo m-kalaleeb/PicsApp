@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sixbits.picsapp.databinding.FragmentAlbumsListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AlbumListFragment : Fragment() {
 
     // We are doing it this way to avoid memory leaks, late init vars can be used in some situations though
