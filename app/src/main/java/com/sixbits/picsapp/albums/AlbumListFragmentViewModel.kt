@@ -50,8 +50,9 @@ class AlbumListFragmentViewModel @Inject constructor(
                     val res = getAlbumPhotosUseCase.execute(it.id)
                     return@async if (res.isSuccess) {
                         AlbumWithPhotos(
-                            album = it,
-                            photos = res.getOrThrow()
+                            id = it.id,
+                            title = it.title,
+                            thumbnail = res.getOrThrow().firstOrNull()?.thumbnailUrl
                         )
                     } else {
                         null
@@ -79,8 +80,9 @@ class AlbumListFragmentViewModel @Inject constructor(
                         val res = getAlbumPhotosUseCase.execute(it.id)
                         return@async if (res.isSuccess) {
                             AlbumWithPhotos(
-                                album = it,
-                                photos = res.getOrThrow()
+                                id = it.id,
+                                title = it.title,
+                                thumbnail = res.getOrThrow().firstOrNull()?.thumbnailUrl
                             )
                         } else {
                             null
