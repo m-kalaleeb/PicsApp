@@ -4,5 +4,11 @@ import com.sixbits.domain.model.Album
 
 interface AlbumsRepository {
 
-    suspend fun getAlbums(): List<Album>
+    /**
+     * Gets the albums list from the api
+     *
+     * @note this can be cached in Room to make an initial load, and get the albums
+     * list when this is done, for now, I'll just use the API side.
+     */
+    suspend fun getAlbums(): Result<List<Album>>
 }
