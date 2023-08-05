@@ -48,7 +48,7 @@ class AlbumListFragment : Fragment() {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     val llm = binding.albums.layoutManager as LinearLayoutManager
                     Timber.d("${llm.findLastVisibleItemPosition()} || ${albumsAdapter.itemCount} || ${albumsAdapter.itemCount - llm.findLastVisibleItemPosition()}")
-                    if (albumsAdapter.itemCount - llm.findLastVisibleItemPosition() < 3) {
+                    if (albumsAdapter.itemCount - llm.findLastVisibleItemPosition() <= 3) {
                         viewModel.requestMore()
                     }
                 }

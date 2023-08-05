@@ -31,7 +31,7 @@ class AlbumListFragmentViewModel @Inject constructor(
 
     // A cache to get fake pagination from
     private var albumsList: List<Album>? = null
-    private var albumsWithPhotosList = mutableListOf<AlbumWithPhotos>()
+    private var albumsWithPhotosList = mutableSetOf<AlbumWithPhotos>()
     private val pageSize = 10
 
     init {
@@ -72,6 +72,7 @@ class AlbumListFragmentViewModel @Inject constructor(
     }
 
     fun requestMore() {
+        Timber.d("Requesting More")
         val albumsList = albumsList ?: return
 
         viewModelScope.launch {
@@ -94,7 +95,7 @@ class AlbumListFragmentViewModel @Inject constructor(
                 }.awaitAll().filterNotNull()
 
                 albumsWithPhotosList.addAll(photosList)
-                _albums.postValue(albumsWithPhotosList)
+                _albums.postValue(albumsWithPhotosList.toList())
                 _isLoading.postValue(false)
             }
         }
