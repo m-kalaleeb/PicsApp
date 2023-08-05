@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sixbits.domain.model.Album
-import com.sixbits.domain.model.AlbumPhoto
 import com.sixbits.domain.usecase.GetAlbumPhotosUseCase
 import com.sixbits.domain.usecase.GetAlbumsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,7 +51,7 @@ class AlbumListFragmentViewModel @Inject constructor(
                         AlbumWithPhotos(
                             id = it.id,
                             title = it.title,
-                            thumbnail = res.getOrThrow().firstOrNull()?.thumbnailUrl
+                            thumbnailUrl = res.getOrThrow().firstOrNull()?.thumbnailUrl
                         )
                     } else {
                         null
@@ -82,7 +81,7 @@ class AlbumListFragmentViewModel @Inject constructor(
                             AlbumWithPhotos(
                                 id = it.id,
                                 title = it.title,
-                                thumbnail = res.getOrThrow().firstOrNull()?.thumbnailUrl
+                                thumbnailUrl = res.getOrThrow().firstOrNull()?.thumbnailUrl
                             )
                         } else {
                             null
