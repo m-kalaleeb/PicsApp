@@ -1,7 +1,8 @@
 package com.sixbits.data.repository
 
 import com.sixbits.domain.api.AlbumsApi
-import com.sixbits.domain.response.AlbumsItemResponse
+import com.sixbits.domain.response.AlbumItemResponse
+import com.sixbits.domain.response.AlbumPhotoItemResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -12,16 +13,18 @@ class AlbumsRepositoryImplTest {
     @Test
     fun `get albums successfully`(): Unit = runBlocking {
         val fakeApi = object : AlbumsApi {
-            override suspend fun getAlbums(): List<AlbumsItemResponse> {
+            override suspend fun getAlbums(): List<AlbumItemResponse> {
                 return listOf(
-                    AlbumsItemResponse(
+                    AlbumItemResponse(
                         id = 5,
-                        albumId = 7,
-                        url = "https://test.com",
-                        thumbnailUrl = "https://test.com/thumbnail",
+                        userId = 7,
                         title = "Amazing title"
                     )
                 )
+            }
+
+            override suspend fun getAlbumsPhotos(id: Int): List<AlbumPhotoItemResponse> {
+                return emptyList()
             }
         }
 
@@ -33,17 +36,19 @@ class AlbumsRepositoryImplTest {
 
         val albumsList = albumsResult.getOrThrow()
         assertEquals(5, albumsList[0].id)
-        assertEquals(7, albumsList[0].albumId)
-        assertEquals("https://test.com", albumsList[0].url)
-        assertEquals("https://test.com/thumbnail", albumsList[0].thumbnailUrl)
+        assertEquals(7, albumsList[0].userId)
         assertEquals("Amazing title", albumsList[0].title)
     }
 
     @Test
     fun `get albums with IO Exception`(): Unit = runBlocking {
         val fakeApi = object : AlbumsApi {
-            override suspend fun getAlbums(): List<AlbumsItemResponse> {
+            override suspend fun getAlbums(): List<AlbumItemResponse> {
                 throw IOException()
+            }
+
+            override suspend fun getAlbumsPhotos(id: Int): List<AlbumPhotoItemResponse> {
+                return emptyList()
             }
         }
 
