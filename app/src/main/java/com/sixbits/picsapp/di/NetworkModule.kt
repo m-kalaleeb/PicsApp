@@ -3,6 +3,7 @@ package com.sixbits.picsapp.di
 import com.sixbits.data.repository.AlbumsRepositoryImpl
 import com.sixbits.domain.api.AlbumsApi
 import com.sixbits.domain.repository.AlbumsRepository
+import com.sixbits.domain.usecase.GetAlbumPhotosUseCase
 import com.sixbits.domain.usecase.GetAlbumsUseCase
 import com.sixbits.picsapp.config.Config
 import dagger.Binds
@@ -54,6 +55,13 @@ class NetworkModule {
         albumsRepository: AlbumsRepository
     ): GetAlbumsUseCase {
         return GetAlbumsUseCase(albumsRepository = albumsRepository)
+    }
+
+    @Provides
+    fun provideAlbumPhotosUseCase(
+        albumsRepository: AlbumsRepository
+    ): GetAlbumPhotosUseCase {
+        return GetAlbumPhotosUseCase(albumsRepository)
     }
 }
 
