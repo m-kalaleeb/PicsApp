@@ -63,12 +63,10 @@ class AlbumListFragmentViewModel @Inject constructor(
 
 
             _albums.postValue(photosList)
-            Timber.d("Albums $albums")
         }
     }
 
     fun requestMore() {
-        Timber.d("Requesting More")
         val albumsList = albumsList ?: return
 
         viewModelScope.launch {
