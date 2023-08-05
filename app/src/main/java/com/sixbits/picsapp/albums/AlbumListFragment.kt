@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.sixbits.picsapp.databinding.FragmentAlbumsListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +41,10 @@ class AlbumListFragment : Fragment() {
     private fun setupListeners() {
         viewModel.albums.observe(viewLifecycleOwner) {
             albumsAdapter.submitList(it)
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
     }
 }
