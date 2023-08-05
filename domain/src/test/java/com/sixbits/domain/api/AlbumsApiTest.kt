@@ -1,4 +1,4 @@
-package com.sixbits.domain.repository
+package com.sixbits.domain.api
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -10,7 +10,7 @@ import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-class AlbumsRepositoryTest {
+class AlbumsApiTest {
 
     private var mockWebServer: MockWebServer? = null
 
@@ -35,7 +35,7 @@ class AlbumsRepositoryTest {
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
 
-        val repo = retrofit.create(AlbumsRepository::class.java)
+        val repo = retrofit.create(AlbumsApi::class.java)
 
         val albums = repo.getAlbums()
 

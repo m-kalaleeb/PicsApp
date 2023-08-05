@@ -1,9 +1,9 @@
-package com.sixbits.domain.repository
+package com.sixbits.domain.api
 
 import com.sixbits.domain.response.AlbumsListResponse
 import retrofit2.http.GET
 
-interface AlbumsRepository {
+interface AlbumsApi {
 
     @GET("albums/1/photos")
     suspend fun getAlbums(): List<AlbumsListResponse>
