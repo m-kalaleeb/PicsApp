@@ -64,5 +64,9 @@ class AlbumListFragment : Fragment() {
         viewModel.error.observe(viewLifecycleOwner) {
             Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.refreshLayout.isRefreshing = it
+        }
     }
 }

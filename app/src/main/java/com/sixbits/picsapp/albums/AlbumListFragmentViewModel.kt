@@ -26,6 +26,9 @@ class AlbumListFragmentViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     // A cache to get fake pagination from
     private var albumsList: List<Album>? = null
     private var albumsWithPhotosList = mutableListOf<AlbumWithPhotos>()
@@ -33,11 +36,13 @@ class AlbumListFragmentViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            _isLoading.postValue(true)
             val albumsResult = getAlbumsUseCase.execute()
 
             if (albumsResult.isFailure) {
                 _error.postValue(albumsResult.exceptionOrNull()?.message ?: "Unknown Error!!")
                 Timber.e(albumsResult.exceptionOrNull())
+                _isLoading.postValue(false)
                 return@launch
             }
 
@@ -61,7 +66,7 @@ class AlbumListFragmentViewModel @Inject constructor(
 
             albumsWithPhotosList.addAll(photosList)
 
-
+            _isLoading.postValue(false)
             _albums.postValue(photosList)
         }
     }
@@ -70,6 +75,7 @@ class AlbumListFragmentViewModel @Inject constructor(
         val albumsList = albumsList ?: return
 
         viewModelScope.launch {
+            _isLoading.postValue(true)
             if (albumsList.size > albumsWithPhotosList.size) {
 
                 val photosList = albumsList.subList(0, albumsWithPhotosList.size + pageSize).map {
@@ -89,6 +95,7 @@ class AlbumListFragmentViewModel @Inject constructor(
 
                 albumsWithPhotosList.addAll(photosList)
                 _albums.postValue(albumsWithPhotosList)
+                _isLoading.postValue(false)
             }
         }
     }
