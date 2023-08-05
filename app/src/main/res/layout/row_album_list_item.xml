@@ -23,6 +23,7 @@
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <TextView
+                android:id="@+id/album_title"
                 style="@style/MaterialAlertDialog.Material3.Title.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

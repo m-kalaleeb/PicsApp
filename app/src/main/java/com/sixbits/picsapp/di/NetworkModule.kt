@@ -47,6 +47,7 @@ class NetworkModule {
         @AlbumsRetrofit retrofit: Retrofit
     ): AlbumsApi = retrofit.create()
 
+    // TODO: Make this a bind
     @Provides
     @Singleton
     fun provideAlbumsRepository(api: AlbumsApi): AlbumsRepository = AlbumsRepositoryImpl(api)
