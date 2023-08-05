@@ -3,6 +3,7 @@ package com.sixbits.picsapp.di
 import com.sixbits.data.repository.AlbumsRepositoryImpl
 import com.sixbits.domain.api.AlbumsApi
 import com.sixbits.domain.repository.AlbumsRepository
+import com.sixbits.domain.usecase.GetAlbumsUseCase
 import com.sixbits.picsapp.config.Config
 import dagger.Binds
 import dagger.Module
@@ -46,6 +47,14 @@ class NetworkModule {
     fun provideAlbumsApi(
         @AlbumsRetrofit retrofit: Retrofit
     ): AlbumsApi = retrofit.create()
+
+    // Not a singleton, to allow for distinct requests
+    @Provides
+    fun provideAlbumsUseCase(
+        albumsRepository: AlbumsRepository
+    ): GetAlbumsUseCase {
+        return GetAlbumsUseCase(albumsRepository = albumsRepository)
+    }
 }
 
 
