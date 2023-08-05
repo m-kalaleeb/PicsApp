@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PicsApp"
 include(":app")
+include(":domain")
+include(":data")
