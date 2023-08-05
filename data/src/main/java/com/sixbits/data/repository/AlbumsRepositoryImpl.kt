@@ -5,8 +5,9 @@ import com.sixbits.domain.api.AlbumsApi
 import com.sixbits.domain.model.Album
 import com.sixbits.domain.repository.AlbumsRepository
 import java.lang.Exception
+import javax.inject.Inject
 
-class AlbumsRepositoryImpl(
+class AlbumsRepositoryImpl @Inject constructor(
     private val albumsApi: AlbumsApi
 ) : AlbumsRepository {
 

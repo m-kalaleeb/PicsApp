@@ -46,9 +46,13 @@ class NetworkModule {
     fun provideAlbumsApi(
         @AlbumsRetrofit retrofit: Retrofit
     ): AlbumsApi = retrofit.create()
+}
 
-    // TODO: Make this a bind
-    @Provides
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface NetworkModuleBinds {
+    @Binds
     @Singleton
-    fun provideAlbumsRepository(api: AlbumsApi): AlbumsRepository = AlbumsRepositoryImpl(api)
+    fun bindAlbumsRepository(impl: AlbumsRepositoryImpl): AlbumsRepository
 }
