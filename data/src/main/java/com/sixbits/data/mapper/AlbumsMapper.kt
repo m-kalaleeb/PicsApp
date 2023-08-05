@@ -1,9 +1,9 @@
 package com.sixbits.data.mapper
 
 import com.sixbits.domain.model.Album
-import com.sixbits.domain.response.AlbumsListResponse
+import com.sixbits.domain.response.AlbumsItemResponse
 
-fun AlbumsListResponse.toAlbum(): Album {
+fun AlbumsItemResponse.toAlbum(): Album {
     return Album(
         id = id,
         albumId = albumId,
