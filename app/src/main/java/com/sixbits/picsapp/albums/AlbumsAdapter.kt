@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.sixbits.domain.model.Album
 import com.sixbits.picsapp.databinding.RowAlbumListItemBinding
 
-class AlbumsAdapter : ListAdapter<Album, AlbumsAdapter.VH>(AlbumsDiffUtl()) {
+class AlbumsAdapter : ListAdapter<AlbumWithPhotos, AlbumsAdapter.VH>(AlbumsDiffUtl()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,18 +21,18 @@ class AlbumsAdapter : ListAdapter<Album, AlbumsAdapter.VH>(AlbumsDiffUtl()) {
         holder.bind(currentList[position])
     }
 
-    class AlbumsDiffUtl : DiffUtil.ItemCallback<Album>() {
-        override fun areContentsTheSame(oldItem: Album, newItem: Album): Boolean {
+    class AlbumsDiffUtl : DiffUtil.ItemCallback<AlbumWithPhotos>() {
+        override fun areContentsTheSame(oldItem: AlbumWithPhotos, newItem: AlbumWithPhotos): Boolean {
             return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItem: Album, newItem: Album): Boolean {
+        override fun areItemsTheSame(oldItem: AlbumWithPhotos, newItem: AlbumWithPhotos): Boolean {
             return oldItem.id == newItem.id
         }
     }
 
     class VH(private val binding: RowAlbumListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(album: Album) {
+        fun bind(album: AlbumWithPhotos) {
             Glide.with(binding.root)
                 .load(album.thumbnailUrl)
                 .into(binding.albumImage)
