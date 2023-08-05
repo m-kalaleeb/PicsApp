@@ -44,9 +44,13 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
 
     val moshiVersion = "1.14.0"
-//    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
     implementation("com.squareup.moshi:moshi:$moshiVersion")
 
+
+    val okHttpVersion = "4.11.0"
+    implementation("com.squareup.okhttp3:okhttp:$okHttpVersion")
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okHttpVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
