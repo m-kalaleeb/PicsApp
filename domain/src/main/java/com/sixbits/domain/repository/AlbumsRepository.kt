@@ -10,6 +10,9 @@ interface AlbumsRepository {
      *
      * @note this can be cached in Room to make an initial load, and get the albums
      * list when this is done, for now, I'll just use the API side.
+     *
+     * @note for now, I'm assuming that I'll get all the albums in a single request.
+     * If this changes to a paginated request, offset will be needed in this call.
      */
     suspend fun getAlbums(): Result<List<Album>>
 
