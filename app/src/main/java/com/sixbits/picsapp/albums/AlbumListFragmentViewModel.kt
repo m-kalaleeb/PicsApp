@@ -14,6 +14,23 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * Albums List ViewModel
+ *
+ * Note here, I'm using an In-Memory caching strategy.
+ * I don't expect users to scroll much in this list, and to use a search
+ * feature or a pagination (with a given offset or a page number) if there is a lot
+ * of data that needs to scroll through. Hence this approach work.
+ *
+ * Simply, from a product perspective, you don't want users to scroll a lot, through a data
+ * list they need and then if they close the app to loose their progress.
+ *
+ * Obviously this use case differs in terms of social media apps where the feed is changing.
+ *
+ * @param getAlbumsUseCase a use case to get all albums from the BE
+ * @param getAlbumPhotosUseCase a use case to get a specific album photos from the BE
+ *
+ */
 @HiltViewModel
 class AlbumListFragmentViewModel @Inject constructor(
     private val getAlbumsUseCase: GetAlbumsUseCase,
@@ -79,7 +96,15 @@ class AlbumListFragmentViewModel @Inject constructor(
             _isLoading.postValue(true)
             if (albumsList.size > albumsWithPhotosList.size) {
 
-                val photosList = albumsList.subList(albumsWithPhotosList.size, albumsWithPhotosList.size + pageSize).map {
+                val pageEnd  = if (albumsWithPhotosList.size + pageSize < albumsList.size) {
+                    albumsWithPhotosList.size + pageSize
+                } else {
+                    albumsList.size
+                }
+
+                val newPage = albumsList.subList(albumsWithPhotosList.size, pageEnd)
+
+                val photosList = newPage.map {
                     async {
                         val res = getAlbumPhotosUseCase.execute(it.id)
                         return@async if (res.isSuccess) {
